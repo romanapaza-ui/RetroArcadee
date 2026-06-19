@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personajes - RetroArcade</title>
+    <link rel="stylesheet" href="AGUS.CSS">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        /* Hace que el cursor cambie a una mano para saber que se puede hacer click */
+        .personaje {
+            cursor: pointer;
+        }
+
+        /* Estilos para la ventana emergente (Modal) */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.8);
+        }
+        .modal-contenido {
+            background-color: #222;
+            color: #fff;
+            margin: 15% auto; 
+            padding: 20px;
+            border: 4px solid #fff;
+            width: 60%;
+            max-width: 500px;
+            text-align: center;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+        }
+        .cerrar-modal {
+            color: red;
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>PERSONAJES</h1>
+        <p>Los personajes más históricos de la era de los '80 y '90</p>
+    </header>
+ 
+    <nav>
+        <a href="game.html">Inicio</a>
+        <a href="prsj.html">Personajes</a>
+    </nav>
+  
+    <div class="carrusel-contenedor">
+        <button class="flecha izq" onclick="cambiarPersonaje(-1, event)">&lt;</button>
+
+        <section class="personajes">
+       <div class="personaje activo" onclick="mostrarInfo('Saltando desde 1981 para salvar a la princesa Peach. Creado por Shigeru Miyamoto, es el ícono indiscutible de Nintendo.')">
+                <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHRjcmI3enN6aXNrYjJ4cml3ZmMzdndmbTk0bnc4ZmFtcDh5Y3JwNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6fJ42Ud1rylg4eTS/giphy.gif" alt="Mario Bros">
+                <h2>MARIO</h2>
+                <p class="descripcion">Click para ver historia.</p>
+            </div>
+  
+            <div class="personaje" onclick="mostrarInfo('Lanzado en 1980 por Toru Iwatani de Namco. Su misión es comer esferas en un laberinto infinito mientras escapa de Blinky, Pinky, Inky y Clyde.')">
+                <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDcwNGJmZmV4ZGppeWIzejdneTJtZGN6czF0N3VjazVkeDltOThzcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/11UyDwkBKvmybe/giphy.gif" alt="Pac-Man">
+                <h2>PAC-MAN</h2>
+                <p class="descripcion">Click para ver historia.</p>
+            </div>
+ 
+            <div class="personaje" onclick="mostrarInfo('Nacido en 1991 para competir contra Mario. Colecciona anillos dorados, corre a la velocidad del sonido y destruye los robots del malvado Dr. Eggman.')">
+                <img src="sonic.gif" alt="Sonic">
+                <h2>SONIC</h2>
+                <p class="descripcion">Click para ver historia.</p>
+            </div>
+        </section>
+
+        <button class="flecha der" onclick="cambiarPersonaje(1, event)">&gt;</button>
+    </div>
+
+    <!-- VENTANA EMERGENTE -->
+    <div id="miModal" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
+            <h2>HISTORIA</h2>
+            <p id="textoModal" style="margin-top: 20px; line-height: 1.6;"></p>
+        </div>
+    </div>
+ 
+    <footer>
+        <p>❤️ STAY DETERMINED ❤️</p>
+    </footer>
+ 
+    <script>
+        let indexActual = 0;
+        const personajes = document.querySelectorAll('.personaje');
+ 
+        function cambiarPersonaje(direccion, event) {
+            event.stopPropagation(); // Evita que se abra la info al tocar la flecha
+            personajes[indexActual].classList.remove('activo');
+            indexActual += direccion;
+
+            if (indexActual >= personajes.length) {
+                indexActual = 0;
+            } else if (indexActual < 0) {
+                indexActual = personajes.length - 1;
+            }
+ 
+            personajes[indexActual].add('activo'); 
+            personajes[indexActual].classList.add('activo');
+        }
+ 
+        function mostrarInfo(texto) {
+            document.getElementById('textoModal').innerText = texto;
+            document.getElementById('miModal').style.display = "block";
+        }
+
+        function cerrarModal() {
+            document.getElementById('miModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('miModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>
